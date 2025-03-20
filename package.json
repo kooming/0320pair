@@ -1,0 +1,26 @@
+{
+  "name": "0320pair",
+  "version": "1.0.0",
+  "description": "ㅎㅇ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kooming/0320pair.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kooming/0320pair/issues"
+  },
+  "homepage": "https://github.com/kooming/0320pair#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mysql2": "^3.14.0"
+  }
+}
