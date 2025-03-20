@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% for(let i=0; i<data.length; i++) { %>
+        <a href='/detail?index=<%= data[i].id %>'>
+            <div class="content-area">
+                <div><%= data[i].id %></div>
+                <div><%= data[i].title %></div>
+                <div><%= data[i].content %></div>
+                <img src="<%= data[i].imgpath %>" alt="">
+            </div>
+            <% } %>
+        </a>
+    <button class="button">글 추가</button>
+</body>
+<script>
+    const button= document.querySelector(".button");
+    button.onclick = () => {
+        location.href = "/create"
+    }
+</script>
+</html>

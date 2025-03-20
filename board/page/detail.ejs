@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>제목: <%= data.title %></div>
+    <div>내용: <%= data.content %></div>
+    <div>사진: <img src="<%= data.imgpath %>" alt=""></div>
+    <button class="remove-btn">삭제</button>
+    <button class="edit-btn">수정</button>
+        
+
+</body>
+<script>
+    const editBtn =document.querySelector(".edit-btn");
+    editBtn.onclick =() => {
+        location.href ="/edit?index=<%= data.id %>";
+    }
+    const removeBtn = document.querySelector(".remove-btn");
+    removeBtn.onclick =() => {
+        const data =confirm("삭제하시겠습니까?")
+        if(data === true){
+            location.href = "/delete?index=<%= data.id %>"
+        }
+    }
+</script>
+</html>
