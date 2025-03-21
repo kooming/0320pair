@@ -41,6 +41,7 @@
         form.append('upw', upw.value);
         form.append('nick', nick.value);
         form.append('profImg', profImg.files[0]);
+        console.log(profImg.files[0], '나야');
         const {data} = await axios.post('/user_edit', form, {
             headers: {
                 'Content-Type': 'multipart/form-data'

@@ -37,7 +37,7 @@ const userInfoEdit = async (upw, nick, imgpath, id) => {
     if(imgpath) {fieldArr.push("imgpath"); valueArr.push(imgpath)};
 
     let valueQuery = valueArr.map((el,index)=>`${fieldArr[index]}="${el}"`).join(',') 
-    // console.log(valueQuery)
+    console.log(imgpath)
     console.log(`update users set ${valueQuery} where uid = 123`)
     await connectPool.query (`update users set ${valueQuery} where id = ${id}`);
     // return {state : 200, message : '수정 완료'};

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {upload} = require('../lib/imgUpload');
-const {userNickAll, login, signup, loginToken, userEditCheck} = require('../controllers/user.controller');
+const {userNickAll, login, signup, loginToken, userEditCheck, selectUserInfo} = require('../controllers/user.controller');
 const { userInfoEdit } = require('../models/user');
 
 router.get('/', (req, res) => {
@@ -31,23 +31,17 @@ router.post('/login', async (req, res) => { // 로그인 요청을 처리하는 
 
 });
 
-// const loginToken = (req, res, next) => { // 토큰을 검증하는 미들웨어. 토큰이 유효하면 req.user에 값을 넣어줌
-//     console.log(req.headers.cookie);
-//     const data = req.headers.cookie.split("=")[1];
-//     req.user = jwt.verify(data, process.env.TOKEN_KEY);
-//     next();
-// };  
-
-router.get('/mypage', loginToken, (req, res) => {
+router.get('/mypage', loginToken, async (req, res) => {
     console.log(req.user);
-    const {nick, imgpath, id} = req.user; // req.user는 loginToken에서 넣어준 값
+    const {id, uid} = req.user; 
+    const {nick, imgpath} = await selectUserInfo(uid)
     res.render('mypage', {nick, imgpath, id});
 });
 
 router.post('/signup', upload.single('image'), async (req, res) => {
     const { uid, upw, name, nick, gender } = req.body;
-    const {path} = req.file
-    const data = await signup(uid, upw, name, nick, gender,'/' + path);
+    const {filename} = req.file
+    const data = await signup(uid, upw, name, nick, gender,'/public/images/' + filename);
     res.json(data);
 });
 
@@ -58,8 +52,8 @@ router.get('/user_edit', loginToken, (req, res) => {
 router.post('/user_edit', loginToken, upload.single('profImg'), async (req, res) => {
     const {upw, nick, id} = req.body
     if(req.file){
-        const {path} = req.file
-        const data = await userEditCheck(upw, nick, '/' + path, id);
+        const {filename} = req.file
+        const data = await userEditCheck(upw, nick, '/public/images/' + filename, id);
         res.json(data);
         // res.setCookie
     } else {

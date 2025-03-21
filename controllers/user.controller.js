@@ -19,8 +19,17 @@ const login = async (uid, upw) => {
         if(!isPasswordCheck) return {state : 402, message : '비밀번호가 일치하지 않습니다'};
         
         const {nick, imgpath, id} = data;
-        const jwtToken = jwt.sign({nick, imgpath, id}, process.env.TOKEN_KEY, {expiresIn : '100m'});
+        const jwtToken = jwt.sign({nick, imgpath, id, uid}, process.env.TOKEN_KEY, {expiresIn : '100m'});
         return {state : 200, message : '로그인 성공', user : { token: jwtToken }};
+    } catch (error) {
+        return error;
+    }
+}
+
+const selectUserInfo = async (uid) => {
+    try {
+        const {imgpath, nick} = await userSelectUid(uid);
+        return {imgpath, nick};
     } catch (error) {
         return error;
     }
@@ -46,8 +55,7 @@ const signup = async (uid, upw, name, nick, gender, imgpath) => {
 
 const loginToken = (req, res, next) => { // 토큰을 검증하는 미들웨어. 토큰이 유효하면 req.user에 값을 넣어줌
     const data = req.headers.cookie.split("=")[1];
-    const userData = jwt.verify(data, process.env.TOKEN_KEY);
-    req.user = userData;
+    req.user = jwt.verify(data, process.env.TOKEN_KEY);
     next();
 };  
 
@@ -66,4 +74,4 @@ const userEditCheck = async (upw, nick, imgpath, id) => {
 
 
 
-module.exports = { userNickAll, login, signup, loginToken, userEditCheck };
+module.exports = { userNickAll, login, signup, loginToken, userEditCheck, selectUserInfo };
