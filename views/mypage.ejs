@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('header2') %>
+    <strong><%= nick %>님의 마이페이지</strong>
+    <div><img src="<%= imgpath %>" alt=""></div>
+    <button id="editBtn">내 정보 수정</button>
+    <button id="logOut">로그아웃</button>
+    <button>나의 글 보기</button>
+</body>
+<script>
+    editBtn.onclick = () => {
+        location.href = `/user_edit?index=<%= id %>`;
+    }
+    logOut.onclick = async () => {
+        const {data} = await axios.get('/logout');
+        if(data.state === 200) {
+            location.href = '/';
+        } else {
+            alert('로그아웃 실패');
+        }
+    }
+</script>
+</html>
