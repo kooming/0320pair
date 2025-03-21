@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 10vw auto;
+        }
+    </style>
+</head>
+<body>
+    <%- include('header2') %>
+    <form id="edit_form">
+        <strong>회원정보 수정</strong>
+        <small>입력하지 않은 값은 기존 정보가 유지됩니다.</small>
+        <label for="">비밀번호</label>
+        <input type="password" name="upw">
+        <label for="">닉네임</label>
+        <input type="text" name="nick">
+        <label for="">프로필 사진</label>
+        <input type="file" name="profImg" >
+        <button>수정</button>
+    </form>
+</body>
+<script>
+    edit_form.onsubmit = async (e) => {
+        e.preventDefault();
+        const { upw, nick, profImg } = e.target;
+        const form = new FormData();
+        const id = location.search.split('=')[1];
+        form.append('id', id);
+        form.append('upw', upw.value);
+        form.append('nick', nick.value);
+        form.append('profImg', profImg.files[0]);
+        console.log(profImg.files[0], '나야');
+        const {data} = await axios.post('/user_edit', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        if(data.state === 200) {
+            location.href = '/mypage';
+        }
+    }
+</script>
+</html>
