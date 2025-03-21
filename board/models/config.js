@@ -23,6 +23,15 @@ const init = async () =>
     }
 
 }
+const commentInit = async () => {
+    try {
+        await connetionPool.query("SELECT * FROM comment")
+    } catch (error) {
+        await connetionPool.query("CREATE TABLE comment(id INT AUTO_INCREMENT PRIMARY KEY, postid INT, comment VARCHAR(150) );")
+    }
+}
 init();
+commentInit();
+
 
 module.exports = connetionPool;

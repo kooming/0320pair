@@ -1,4 +1,4 @@
-const {createContent,postDelete,postSelect,postSelectAll,postUpdate}=require("../models/board");
+const {createContent,postDelete,postSelect,postSelectAll,postUpdate}=require("../models/main.board");
 
 const createContentHandeler = async (title,content,imgpath) => {
     try {
