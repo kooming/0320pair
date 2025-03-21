@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const { postSelectAllHandler, postSelectHandler, postDeleteHandler,createContentHandeler, postUpdateHandler} = require("../controller/board.controller");
+const {createCommentHandler, selectDetailHandler} = require("../controller/board.detail.controller");
 const fs = require("fs");
 const upload =require("../lib/uploadimg");
 
@@ -12,7 +13,7 @@ router.get("/create",(req,res)=> {
 })
 router.get("/detail", async(req,res)=> {
     const {index} =req.query
-    const {data} = await postSelectHandler(index);
+    const {data} = await selectDetailHandler(index);
     console.log(data);
     res.render("detail",{data});
 })
@@ -39,6 +40,12 @@ router.post("/",upload.single("file"),async (req,res)=> {
     const imgpath = "/public/"+req.file.filename
     await createContentHandeler(title,content,imgpath);
     res.redirect("/");
+})
+router.post("/comment", async (req,res)=> {
+    const {index} = (req.query);
+    const {comment} = (req.body);
+    await createCommentHandler(index,comment);
+    res.redirect(`/detail?index=${index}`);
 })
 // // /upload/+ 'download1742453677283.jpg'
 module.exports=router

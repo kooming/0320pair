@@ -27,7 +27,7 @@ const commentInit = async () => {
     try {
         await connetionPool.query("SELECT * FROM comment")
     } catch (error) {
-        await connetionPool.query("CREATE TABLE comment(id INT AUTO_INCREMENT PRIMARY KEY, postid INT, comment VARCHAR(150) );")
+        await connetionPool.query("CREATE TABLE comment(id INT AUTO_INCREMENT PRIMARY KEY, postid INT, comment VARCHAR(150),CONSTRAINT fk_board_id FOREIGN KEY (postid) REFERENCES board(id) ON DELETE CASCADE)")
     }
 }
 init();

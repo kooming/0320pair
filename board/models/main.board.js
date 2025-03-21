@@ -38,6 +38,7 @@ const postDelete = async(id) => {
        await connetionPool.query("DELETE FROM board WHERE id=?; SET @CNT = 0;UPDATE board SET board.id=@cnt:=@cnt+1;ALTER TABLE board AUTO_INCREMENT=0;",[id]);
        return {state: 204, message:"삭제 성공"};
     } catch (error) {
+        console.log(error);
         return {state: 404, message: "삭제 실패"};
     }
 }

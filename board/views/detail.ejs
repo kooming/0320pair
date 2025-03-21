@@ -8,18 +8,21 @@
 </head>
 <body>
     <div class="detail-box">
-        <div>제목: <%= data.title %></div>
-        <div>내용: <%= data.content %></div>
-        <div><img src="<%= data.imgpath %>" alt=""> <button class="like">♥</button></div>
+        <div>제목: <%= data[0].title %></div>
+        <div>내용: <%= data[0].content %></div>
+        <div><img src="<%= data[0].imgpath %>" alt=""> <button class="like">♥</button></div>
         <button class="remove-btn">삭제</button>
         <button class="edit-btn">수정</button>
     </div>
     <div class="comment-form">
-        <form action="">
+        <form action="/comment?index=<%= data[0].board_id %>" method="post">
             <label for="">댓글</label>
             <input type="text" name="comment" placeholder="댓글을 입력해주세요 :) ">
             <button>등록</button>
         </form>
+        <% for(let i=0; i<data.length; i++) { %>
+        <div>댓글: <%= data[i].comment %></div>
+        <% } %>
     </div>
         
 
@@ -27,13 +30,13 @@
 <script>
     const editBtn =document.querySelector(".edit-btn");
     editBtn.onclick =() => {
-        location.href ="/edit?index=<%= data.id %>";
+        location.href ="/edit?index=<%= data[0].board_id %>";
     }
     const removeBtn = document.querySelector(".remove-btn");
     removeBtn.onclick =() => {
         const data =confirm("삭제하시겠습니까?")
         if(data === true){
-            location.href = "/delete?index=<%= data.id %>"
+            location.href = "/delete?index=<%= data[0].board_id %>"
         }
     }
 </script>
